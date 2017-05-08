@@ -2,8 +2,8 @@
 #include <SoftwareSerial.h>
 
 // Pines de transmisión (TX) y recepción (RX) del módulo de Bluetooth
-const byte PIN_BT_TX = 1;
-const byte PIN_BT_RX = 0;
+const byte PIN_BT_TX = 11;
+const byte PIN_BT_RX = 10;
 
 
 // Iniciales servo
@@ -31,6 +31,10 @@ Servo base, codo, muneca, pinza;
 
 
 void setup() {
+
+  pinMode(PIN_BT_RX, INPUT);
+  pinMode(PIN_BT_TX, OUTPUT);
+  
   // inicializar Bluetooth
   bt.begin(9600);
 
@@ -44,6 +48,7 @@ void setup() {
 
 void loop() {
   servidorBT();
+  delay(500);
 }
 
 /*
@@ -75,7 +80,7 @@ void servidorBT() {
 * Regresa el caracter leído si es una incial correspondiente a un servo. De lo contrario,
 * regresa el carcter nulo (0).
 */
-String leerInicial() {
+char leerInicial() {
   char charLeido = bt.read();
   switch(charLeido){
     case BASE:
