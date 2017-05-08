@@ -18,6 +18,7 @@ const byte PIN_CODO   = 11;
 const byte PIN_MUNECA = 10;
 const byte PIN_PINZA  = 9;
 
+const byte TERM  = 47;
 const byte CERO  = 48;
 const byte NUEVE = 57;
 
@@ -47,7 +48,7 @@ void setup() {
 }
 
 void loop() {
-  servidorBT();
+  procesarMensaje();
   delay(500);
 }
 
@@ -55,7 +56,7 @@ void loop() {
 * El mensaje debe de tener el formato 'ax', donde a es un caracter que corresponde a la inicial del servo y  
 * x es un entero de 0 a 180.
 */
-void servidorBT() {
+void procesarMensaje() {
   char inicialServo;
   int angulo;
   
@@ -106,7 +107,7 @@ int leerAngulo() {
     charLeido = bt.read();
     if(charLeido >= CERO || charLeido <= NUEVE ) {
       strAngulo += charLeido;
-    } else if (charLeido == 0){
+    } else if (charLeido == TERM){
       break;
     } else {
       break;
